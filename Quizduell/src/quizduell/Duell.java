@@ -47,8 +47,11 @@ public class Duell {
 	 */
 	public void playRound(Scanner inputScanner) {
 
+		int firstQuestionOfRound = (this.currentRound * this.QUESTIONS_PER_ROUND) - 3;
+		int lastQuestionOfRound = this.currentRound * this.QUESTIONS_PER_ROUND;
+		
 		// Get questions for a round and handle answer
-		for (int i = 0; i < (this.currentRound * QUESTIONS_PER_ROUND); i++) {
+		for (int i = firstQuestionOfRound; i < lastQuestionOfRound; i++) {
 
 			Question currentQuestion = duellQuestions.get(i);
 			System.out.println(currentQuestion.toString());

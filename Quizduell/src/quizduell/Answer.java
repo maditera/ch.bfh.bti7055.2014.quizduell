@@ -21,6 +21,7 @@ public class Answer {
 		this.isCorrect = isCorrect;
 	}
 
+	@Override
 	public String toString() {
 		return this.answerText;
 	}
