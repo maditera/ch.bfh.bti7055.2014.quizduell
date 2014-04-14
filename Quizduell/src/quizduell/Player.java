@@ -9,8 +9,8 @@ public class Player {
 
 	/**
 	 * Constructor for a player
-	 * 
-	 * @param userName
+     *
+     * @param userName
 	 *            Name of the player
 	 */
 	public Player(String userName) {
