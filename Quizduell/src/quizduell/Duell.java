@@ -41,7 +41,7 @@ public class Duell {
 		this.currentStatus = DuellStatus.PLAYER1;
 		this.selectRandomQuestions();
 	}
-	
+
 	/**
 	 * Generate the Question output for a round
 	 */
@@ -52,12 +52,13 @@ public class Duell {
 
 			Question currentQuestion = duellQuestions.get(i);
 			System.out.println(currentQuestion.toString());
+
 			char answer;
 			do {
 				System.out.print("Please choose a valid answer: ");
-				answer = inputScanner.nextLine().toUpperCase().charAt(0);
-			} while (answer != 'A' && answer != 'B' && answer != 'C'
-					&& answer != 'D');
+				String input = inputScanner.nextLine();
+				answer = input.toUpperCase().charAt(0);
+			} while (answer != 'A' && answer != 'B' && answer != 'C' && answer != 'D');
 
 			switch (answer) {
 
@@ -79,14 +80,14 @@ public class Duell {
 			}
 		}
 
-		//Increase round counter if both player played the round
+		// Increase round counter if both player played the round
 		if (this.currentStatus == DuellStatus.PLAYER2) {
 			this.currentRound++;
 		}
-		
+
 		// Switch player
 		this.switchPlayer();
-		
+
 		// Check if round limit is reached
 		if (this.currentRound == ROUNDS_PER_DUELL) {
 			this.currentStatus = DuellStatus.FINISHED;
@@ -137,18 +138,14 @@ public class Duell {
 	 */
 	private void selectRandomQuestions() {
 		QuestionPool pool = new QuestionPool();
-		this.duellQuestions = pool.getQuestionSet(ROUNDS_PER_DUELL
-				* QUESTIONS_PER_ROUND);
+		this.duellQuestions = pool.getQuestionSet(ROUNDS_PER_DUELL * QUESTIONS_PER_ROUND);
 
 	}
 
 	@Override
 	public String toString() {
-		return "Duell " + this.duellID + " // " + this.player1.getPlayerName()
-				+ " - " + this.player2.getPlayerName() + " // "
-				+ this.scorePlayer1 + " - " + this.scorePlayer2 + " // "
-				+ "Round: " + this.currentRound + " // " + "Status: "
-				+ this.currentStatus;
+		return "Duell " + this.duellID + " // " + this.player1.getPlayerName() + " - " + this.player2.getPlayerName() + " // " + this.scorePlayer1 + " - "
+				+ this.scorePlayer2 + " // " + "Round: " + this.currentRound + " // " + "Status: " + this.currentStatus;
 	}
 
 	/**

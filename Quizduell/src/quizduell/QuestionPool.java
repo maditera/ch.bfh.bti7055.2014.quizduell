@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class QuestionPool {
-	
+
 	ArrayList<Question> allQuestions;
-	
+
 	public QuestionPool() {
-		
+
 		this.allQuestions = new ArrayList<Question>();
-		
-		//First answer option must be the correct one
+
+		// First answer option must be the correct one
 		this.allQuestions.add(new Question("Was ist KEINE Stadt der Schweiz?", "Berlin", "Bern", "Zürich", "Basel"));
 		this.allQuestions.add(new Question("Was ist eine Stadt der Schweiz?", "Biel", "Berlin", "Bamberg", "Bremen"));
 		this.allQuestions.add(new Question("Was ist KEIN Teil einer Digitalkamera?", "Sieb", "Linse", "Chip", "Sensor"));
@@ -42,19 +42,17 @@ public class QuestionPool {
 		this.allQuestions.add(new Question("Frage Y", "richtig", "falsch", "falsch", "falsch"));
 		this.allQuestions.add(new Question("Frage Z", "richtig", "falsch", "falsch", "falsch"));
 	}
-	
+
 	public ArrayList<Question> getQuestionSet(int numberOfQuestions) {
-		
+
 		ArrayList<Question> allQuestions = this.allQuestions;
 		ArrayList<Question> questionSet = new ArrayList<Question>();
-		
+
 		Collections.shuffle(allQuestions);
-		
+
 		for (int i = 0; i < numberOfQuestions; i++) {
 			questionSet.add(allQuestions.get(i));
 		}
 		return questionSet;
 	}
-	
-	
 }

@@ -1,6 +1,5 @@
 package quizduell;
 
-import java.util.ArrayList;
 
 public class QuizduellTester {
 

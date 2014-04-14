@@ -7,17 +7,18 @@ import java.util.Scanner;
  */
 public class QuizduellUI {
 
-	
 	private QuizduellGame game;
 	private boolean runGame;
 	private Scanner inputScanner;
 
 	/**
 	 * Constructor for UI
-	 * @param game Game object that the UI is working with
+	 * 
+	 * @param game
+	 *            Game object that the UI is working with
 	 */
 	public QuizduellUI(QuizduellGame game) {
-		
+
 		this.game = game;
 		this.inputScanner = new Scanner(System.in);
 	}
@@ -37,8 +38,7 @@ public class QuizduellUI {
 	 * Print the menu options
 	 */
 	public void showMenu() {
-		System.out
-				.println("Log I)n N)ew Duel C)ontinue Duel D)isplay Duels Log O)ut Q)uit");
+		System.out.println("Log I)n N)ew Duel C)ontinue Duel D)isplay Duels Log O)ut Q)uit");
 		System.out.print("Choose an option: ");
 	}
 
@@ -46,15 +46,15 @@ public class QuizduellUI {
 	 * Perform further action according to the users input
 	 */
 	public void handleUserInput() {
-		
+
 		String input = inputScanner.nextLine();
-		
+
 		if (input != null && !input.isEmpty()) {
-			
+
 			char command = input.toUpperCase().charAt(0);
-			
+
 			switch (command) {
-			
+
 			// Log in
 			case 'I':
 				System.out.print("Player name: ");
@@ -93,8 +93,7 @@ public class QuizduellUI {
 					if (game.validateDuell(duellID)) {
 						game.continueDuell(duellID, inputScanner);
 					} else {
-						System.out
-								.println("Please choose a valid duell. It should be your turn and it should not be finished.");
+						System.out.println("Please choose a valid duell. It should be your turn and it should not be finished.");
 					}
 				} else {
 					System.out.println("Please login first");
@@ -116,8 +115,7 @@ public class QuizduellUI {
 					game.logout();
 					System.out.println("Logged out");
 				} else {
-					System.out
-							.println("No action performed because you were not logged in");
+					System.out.println("No action performed because you were not logged in");
 				}
 				break;
 
@@ -131,6 +129,5 @@ public class QuizduellUI {
 				break;
 			}
 		}
-		input = "";
 	}
 }
