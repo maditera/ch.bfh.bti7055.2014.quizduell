@@ -90,6 +90,7 @@ public class QuizduellUI {
 				if (game.getLoginStatus()) {
 					System.out.print("Enter duell number: ");
 					int duellID = inputScanner.nextInt();
+                    inputScanner.nextLine(); //Clear rest of Line from Scanner
 					if (game.validateDuell(duellID)) {
 						game.continueDuell(duellID, inputScanner);
 					} else {
