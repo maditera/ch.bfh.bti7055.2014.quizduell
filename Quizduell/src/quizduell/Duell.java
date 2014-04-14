@@ -89,7 +89,8 @@ public class Duell {
 		this.switchPlayer();
 
 		// Check if round limit is reached
-		if (this.currentRound == ROUNDS_PER_DUELL) {
+		if (this.currentRound == ROUNDS_PER_DUELL+1) {
+			this.currentRound = 0;
 			this.currentStatus = DuellStatus.FINISHED;
 		}
 	}
