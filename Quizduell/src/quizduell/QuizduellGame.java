@@ -136,19 +136,21 @@ class QuizduellGame {
         return false;
     }
 
-    /**
-     * Gather information about all players of a game
-     *
-     * @return Formatted list containing all players in a game
-     */
-    public String getAllPlayers() {
-        String playerList = "";
-        for (Player player : this.allPlayers) {
-            playerList = playerList + player.getPlayerName() + "\n";
-        }
-        return playerList;
-
-    }
+// --Commented out by Inspection START (22.04.14 17:42):
+//    /**
+//     * Gather information about all players of a game
+//     *
+//     * @return Formatted list containing all players in a game
+//     */
+//    public String getAllPlayers() {
+//        String playerList = "";
+//        for (Player player : this.allPlayers) {
+//            playerList = playerList + player.getPlayerName() + "\n";
+//        }
+//        return playerList;
+//
+//    }
+// --Commented out by Inspection STOP (22.04.14 17:42)
 
     /**
      * Search for all duels in which a specific player is involved
