@@ -7,14 +7,14 @@ import java.util.Scanner;
  * The duel manages information like involved players, scores, current player,
  * current round, questions and more
  */
-public class Duell {
+class Duell {
 
     private final int ROUNDS_PER_DUELL = 6;
     private final int QUESTIONS_PER_ROUND = 3;
 
-    private int duellID;
-    private Player player1;
-    private Player player2;
+    private final int duellID;
+    private final Player player1;
+    private final Player player2;
     private int scorePlayer1;
     private int scorePlayer2;
     private int currentRound;
@@ -181,9 +181,6 @@ public class Duell {
      * @return True if duel has not been finished, otherwise false
      */
     public boolean notFinished() {
-        if (this.currentStatus != DuellStatus.FINISHED) {
-            return true;
-        }
-        return false;
+        return this.currentStatus != DuellStatus.FINISHED;
     }
 }

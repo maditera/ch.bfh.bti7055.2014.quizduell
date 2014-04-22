@@ -3,10 +3,10 @@ package quizduell;
 /**
  * An answer has an answer text and a true/false value
  */
-public class Answer {
+class Answer {
 
-    private String answerText;
-    private boolean isCorrect;
+    private final String answerText;
+    private final boolean isCorrect;
 
     /**
      * Constructor for an answer

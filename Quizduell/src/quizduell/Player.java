@@ -5,7 +5,7 @@ package quizduell;
  */
 public class Player {
 
-    private String playerName;
+    private final String playerName;
 
     /**
      * Constructor for a player

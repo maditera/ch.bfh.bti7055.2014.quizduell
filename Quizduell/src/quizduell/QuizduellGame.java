@@ -6,11 +6,11 @@ import java.util.Scanner;
 /**
  * The game provides methods to manage multiple players and duels
  */
-public class QuizduellGame {
+class QuizduellGame {
 
-    private ArrayList<Duell> allDuells;
-    private ArrayList<Player> allPlayers;
-    private ArrayList<Player> possibleOpponents;
+    private final ArrayList<Duell> allDuells;
+    private final ArrayList<Player> allPlayers;
+    private final ArrayList<Player> possibleOpponents;
 
     private Player currentPlayer;
     private Duell currentDuell;
@@ -99,7 +99,7 @@ public class QuizduellGame {
     /**
      * Set a list of all possible opponents for the current player
      */
-    public void setPossibleOpponents() {
+    void setPossibleOpponents() {
         this.possibleOpponents.clear();
         for (Player player : this.allPlayers) {
             if (!this.currentPlayer.equals(player)) {
@@ -156,7 +156,7 @@ public class QuizduellGame {
      * @param player Specific player object
      * @return List of duel objects assigned to specific user
      */
-    public ArrayList<Duell> getAPlayerDuells(Player player) {
+    ArrayList<Duell> getAPlayerDuells(Player player) {
         ArrayList<Duell> APlayersDuells = new ArrayList<Duell>();
         for (Duell duell : this.allDuells) {
             if (duell.getPlayer1().equals(player) || duell.getPlayer2().equals(player)) {

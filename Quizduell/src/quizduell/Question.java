@@ -6,10 +6,10 @@ import java.util.Collections;
 /**
  * A Question contains a question text and multiple answers
  */
-public class Question {
+class Question {
 
-    private String questionText;
-    private ArrayList<Answer> answers = new ArrayList<Answer>();
+    private final String questionText;
+    private final ArrayList<Answer> answers = new ArrayList<Answer>();
 
     /**
      * Constructor for a Question

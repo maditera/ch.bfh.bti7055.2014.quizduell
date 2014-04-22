@@ -5,11 +5,11 @@ import java.util.Scanner;
 /**
  * The UI provides methods to display outputs and handle user inputs
  */
-public class QuizduellUI {
+class QuizduellUI {
 
-    private QuizduellGame game;
+    private final QuizduellGame game;
     private boolean runGame;
-    private Scanner inputScanner;
+    private final Scanner inputScanner;
 
     /**
      * Constructor for UI
@@ -36,7 +36,7 @@ public class QuizduellUI {
     /**
      * Print the menu options
      */
-    public void showMenu() {
+    void showMenu() {
         System.out.println("Log I)n N)ew Duel C)ontinue Duel D)isplay Duels Log O)ut Q)uit");
         System.out.print("Choose an option: ");
     }
@@ -44,7 +44,7 @@ public class QuizduellUI {
     /**
      * Perform further action according to the users input
      */
-    public void handleUserInput() {
+    void handleUserInput() {
 
         String input = inputScanner.nextLine();
 

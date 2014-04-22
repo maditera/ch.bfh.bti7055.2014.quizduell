@@ -3,9 +3,9 @@ package quizduell;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class QuestionPool {
+class QuestionPool {
 
-    ArrayList<Question> allQuestions;
+    private final ArrayList<Question> allQuestions;
 
     public QuestionPool() {
 

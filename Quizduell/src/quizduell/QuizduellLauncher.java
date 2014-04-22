@@ -3,12 +3,12 @@ package quizduell;
 /**
  * The simulation contains the main method to create and run a game instance
  */
-public class QuizduellLauncher {
+class QuizduellLauncher {
 
     /**
      * Main method to run the game
      *
-     * @param args
+     * @param args are not used
      */
     public static void main(String[] args) {
 
