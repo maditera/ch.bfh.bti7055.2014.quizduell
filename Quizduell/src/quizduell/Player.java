@@ -5,24 +5,23 @@ package quizduell;
  */
 public class Player {
 
-	private String playerName;
+    private String playerName;
 
-	/**
-	 * Constructor for a player
+    /**
+     * Constructor for a player
      *
-     * @param userName
-	 *            Name of the player
-	 */
-	public Player(String userName) {
-		this.playerName = userName;
-	}
+     * @param userName Name of the player
+     */
+    public Player(String userName) {
+        this.playerName = userName;
+    }
 
-	/**
-	 * Get the name of a player
-	 * 
-	 * @return a player's name
-	 */
-	public String getPlayerName() {
-		return this.playerName;
-	}
+    /**
+     * Get the name of a player
+     *
+     * @return a player's name
+     */
+    public String getPlayerName() {
+        return this.playerName;
+    }
 }
