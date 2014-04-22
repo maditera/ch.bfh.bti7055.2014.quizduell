@@ -1,0 +1,210 @@
+<html>
+<head>
+<title>Duell.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(98,151,85); }
+.s3 { color: rgb(104,151,187); }
+.s4 { color: rgb(128,128,128); }
+.s5 { color: rgb(106,135,89); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+Duell.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">quizduell</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.Scanner</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s2">/** 
+ * The duel manages information like involved players, scores, current player, 
+ * current round, questions and more 
+ */</span><span class="s1"> 
+</span><span class="s0">class </span><span class="s1">Duell { 
+ 
+    </span><span class="s0">private final int </span><span class="s1">ROUNDS_PER_DUELL = </span><span class="s3">6</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private final int </span><span class="s1">QUESTIONS_PER_ROUND = </span><span class="s3">3</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s0">private final int </span><span class="s1">duellID</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private final </span><span class="s1">Player player1</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private final </span><span class="s1">Player player2</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private int </span><span class="s1">scorePlayer1</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private int </span><span class="s1">scorePlayer2</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private int </span><span class="s1">currentRound</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">DuellStatus currentStatus</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">ArrayList&lt;Question&gt; duellQuestions</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s2">/** 
+     * Constructor for a duel 
+     * 
+     * @param duellID Unique duel ID evaluated by the game 
+     * @param player1 current player 
+     * @param player2 chosen opponent player 
+     */</span><span class="s1"> 
+    </span><span class="s0">public </span><span class="s1">Duell(</span><span class="s0">int </span><span class="s1">duellID</span><span class="s0">, </span><span class="s1">Player player1</span><span class="s0">, </span><span class="s1">Player player2) { 
+        </span><span class="s0">this</span><span class="s1">.duellID = duellID</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.player1 = player1</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.player2 = player2</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.scorePlayer1 = </span><span class="s3">0</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.scorePlayer2 = </span><span class="s3">0</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.currentRound = </span><span class="s3">1</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.currentStatus = DuellStatus.PLAYER1</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.selectRandomQuestions()</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Generate the Question output for a round 
+     */</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">playRound(Scanner inputScanner) { 
+ 
+        </span><span class="s0">int </span><span class="s1">firstQuestionOfRound = (</span><span class="s0">this</span><span class="s1">.currentRound * </span><span class="s0">this</span><span class="s1">.QUESTIONS_PER_ROUND) - </span><span class="s3">3</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">int </span><span class="s1">lastQuestionOfRound = </span><span class="s0">this</span><span class="s1">.currentRound * </span><span class="s0">this</span><span class="s1">.QUESTIONS_PER_ROUND</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s4">// Get questions for a round and handle answer</span><span class="s1"> 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = firstQuestionOfRound</span><span class="s0">; </span><span class="s1">i &lt; lastQuestionOfRound</span><span class="s0">; </span><span class="s1">i++) { 
+ 
+            Question currentQuestion = duellQuestions.get(i)</span><span class="s0">;</span><span class="s1"> 
+            System.out.println(currentQuestion.toString())</span><span class="s0">;</span><span class="s1"> 
+ 
+            </span><span class="s0">char </span><span class="s1">answer</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">do </span><span class="s1">{ 
+                System.out.print(</span><span class="s5">&quot;Please choose a valid answer: &quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                String input = inputScanner.nextLine()</span><span class="s0">;</span><span class="s1"> 
+                answer = input.toUpperCase().charAt(</span><span class="s3">0</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            } </span><span class="s0">while </span><span class="s1">(answer != </span><span class="s5">'A' </span><span class="s1">&amp;&amp; answer != </span><span class="s5">'B' </span><span class="s1">&amp;&amp; answer != </span><span class="s5">'C' </span><span class="s1">&amp;&amp; answer != </span><span class="s5">'D'</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+            </span><span class="s0">switch </span><span class="s1">(answer) { 
+ 
+                </span><span class="s0">case </span><span class="s5">'A'</span><span class="s1">: 
+                    </span><span class="s0">this</span><span class="s1">.handleAnswerInput(currentQuestion</span><span class="s0">, </span><span class="s3">0</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s0">break;</span><span class="s1"> 
+ 
+                </span><span class="s0">case </span><span class="s5">'B'</span><span class="s1">: 
+                    </span><span class="s0">this</span><span class="s1">.handleAnswerInput(currentQuestion</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s0">break;</span><span class="s1"> 
+ 
+                </span><span class="s0">case </span><span class="s5">'C'</span><span class="s1">: 
+                    </span><span class="s0">this</span><span class="s1">.handleAnswerInput(currentQuestion</span><span class="s0">, </span><span class="s3">2</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s0">break;</span><span class="s1"> 
+ 
+                </span><span class="s0">case </span><span class="s5">'D'</span><span class="s1">: 
+                    </span><span class="s0">this</span><span class="s1">.handleAnswerInput(currentQuestion</span><span class="s0">, </span><span class="s3">3</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s0">break;</span><span class="s1"> 
+            } 
+        } 
+ 
+        </span><span class="s4">// Increase round counter if both player played the round</span><span class="s1"> 
+        </span><span class="s0">if </span><span class="s1">(</span><span class="s0">this</span><span class="s1">.currentStatus == DuellStatus.PLAYER2) { 
+            </span><span class="s0">this</span><span class="s1">.currentRound++</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        </span><span class="s4">// Switch player</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.switchPlayer()</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s4">// Check if round limit is reached</span><span class="s1"> 
+        </span><span class="s0">if </span><span class="s1">(</span><span class="s0">this</span><span class="s1">.currentRound == ROUNDS_PER_DUELL + </span><span class="s3">1</span><span class="s1">) { 
+            </span><span class="s0">this</span><span class="s1">.currentRound = </span><span class="s3">0</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">this</span><span class="s1">.currentStatus = DuellStatus.FINISHED</span><span class="s0">;</span><span class="s1"> 
+        } 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Check whether an answer is correct or not 
+     * 
+     * @param currentQuestion Question that should be checked 
+     * @param answerPosition  Identifier for chosen answer 
+     */</span><span class="s1"> 
+    </span><span class="s0">private void </span><span class="s1">handleAnswerInput(Question currentQuestion</span><span class="s0">, int </span><span class="s1">answerPosition) { 
+        </span><span class="s0">if </span><span class="s1">(currentQuestion.checkAnswer(answerPosition)) { 
+            </span><span class="s0">this</span><span class="s1">.addScore()</span><span class="s0">;</span><span class="s1"> 
+            System.out.println(</span><span class="s5">&quot;</span><span class="s0">\n</span><span class="s5">Correct Answer!&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            System.out.println(</span><span class="s5">&quot;</span><span class="s0">\n</span><span class="s5">Wrong Answer!&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        } 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Switch the player 
+     */</span><span class="s1"> 
+    </span><span class="s0">private void </span><span class="s1">switchPlayer() { 
+        </span><span class="s0">if </span><span class="s1">(</span><span class="s0">this</span><span class="s1">.currentStatus == DuellStatus.PLAYER1) { 
+            </span><span class="s0">this</span><span class="s1">.currentStatus = DuellStatus.PLAYER2</span><span class="s0">;</span><span class="s1"> 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            </span><span class="s0">this</span><span class="s1">.currentStatus = DuellStatus.PLAYER1</span><span class="s0">;</span><span class="s1"> 
+        } 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Add score according to current player 
+     */</span><span class="s1"> 
+    </span><span class="s0">private void </span><span class="s1">addScore() { 
+        </span><span class="s0">if </span><span class="s1">(</span><span class="s0">this</span><span class="s1">.currentStatus == DuellStatus.PLAYER1) { 
+            </span><span class="s0">this</span><span class="s1">.scorePlayer1++</span><span class="s0">;</span><span class="s1"> 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            </span><span class="s0">this</span><span class="s1">.scorePlayer2++</span><span class="s0">;</span><span class="s1"> 
+        } 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Select random questions from question pool 
+     */</span><span class="s1"> 
+    </span><span class="s0">private void </span><span class="s1">selectRandomQuestions() { 
+        QuestionPool pool = </span><span class="s0">new </span><span class="s1">QuestionPool()</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.duellQuestions = pool.getQuestionSet(ROUNDS_PER_DUELL * QUESTIONS_PER_ROUND)</span><span class="s0">;</span><span class="s1"> 
+ 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public </span><span class="s1">String toString() { 
+        </span><span class="s0">return </span><span class="s5">&quot;Duell &quot; </span><span class="s1">+ </span><span class="s0">this</span><span class="s1">.duellID + </span><span class="s5">&quot; // &quot; </span><span class="s1">+ </span><span class="s0">this</span><span class="s1">.player1.getPlayerName() + </span><span class="s5">&quot; - &quot; </span><span class="s1">+ </span><span class="s0">this</span><span class="s1">.player2.getPlayerName() + </span><span class="s5">&quot; // &quot; </span><span class="s1">+ </span><span class="s0">this</span><span class="s1">.scorePlayer1 + </span><span class="s5">&quot; - &quot;</span><span class="s1"> 
+                + </span><span class="s0">this</span><span class="s1">.scorePlayer2 + </span><span class="s5">&quot; // &quot; </span><span class="s1">+ </span><span class="s5">&quot;Round: &quot; </span><span class="s1">+ </span><span class="s0">this</span><span class="s1">.currentRound + </span><span class="s5">&quot; // &quot; </span><span class="s1">+ </span><span class="s5">&quot;Status: &quot; </span><span class="s1">+ </span><span class="s0">this</span><span class="s1">.currentStatus</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s2">/** 
+     * @return Player First player of a duel 
+     */</span><span class="s1"> 
+    </span><span class="s0">public </span><span class="s1">Player getPlayer1() { 
+        </span><span class="s0">return this</span><span class="s1">.player1</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s2">/** 
+     * @return Player Second player of a duel 
+     */</span><span class="s1"> 
+    </span><span class="s0">public </span><span class="s1">Player getPlayer2() { 
+        </span><span class="s0">return this</span><span class="s1">.player2</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s2">/** 
+     * @return Unique identifier of a duel 
+     */</span><span class="s1"> 
+    </span><span class="s0">public int </span><span class="s1">getDuellID() { 
+        </span><span class="s0">return this</span><span class="s1">.duellID</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s2">/** 
+     * @return Status of a duel 
+     */</span><span class="s1"> 
+    </span><span class="s0">public </span><span class="s1">DuellStatus getCurrentStatus() { 
+        </span><span class="s0">return this</span><span class="s1">.currentStatus</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Check if a duel has been finished 
+     * 
+     * @return True if duel has not been finished, otherwise false 
+     */</span><span class="s1"> 
+    </span><span class="s0">public boolean </span><span class="s1">notFinished() { 
+        </span><span class="s0">return this</span><span class="s1">.currentStatus != DuellStatus.FINISHED</span><span class="s0">;</span><span class="s1"> 
+    } 
+}</span></pre>
+</body>
+</html>

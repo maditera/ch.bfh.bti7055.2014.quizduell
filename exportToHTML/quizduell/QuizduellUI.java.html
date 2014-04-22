@@ -1,0 +1,157 @@
+<html>
+<head>
+<title>QuizduellUI.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(98,151,85); }
+.s3 { color: rgb(106,135,89); }
+.s4 { color: rgb(104,151,187); }
+.s5 { color: rgb(128,128,128); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+QuizduellUI.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">quizduell</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">java.util.Scanner</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s2">/** 
+ * The UI provides methods to display outputs and handle user inputs 
+ */</span><span class="s1"> 
+</span><span class="s0">class </span><span class="s1">QuizduellUI { 
+ 
+    </span><span class="s0">private final </span><span class="s1">QuizduellGame game</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private boolean </span><span class="s1">runGame</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private final </span><span class="s1">Scanner inputScanner</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s2">/** 
+     * Constructor for UI 
+     * 
+     * @param game Game object that the UI is working with 
+     */</span><span class="s1"> 
+    </span><span class="s0">public </span><span class="s1">QuizduellUI(QuizduellGame game) { 
+ 
+        </span><span class="s0">this</span><span class="s1">.game = game</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.inputScanner = </span><span class="s0">new </span><span class="s1">Scanner(System.in)</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Run the game controlled by a loop 
+     */</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">run() { 
+        </span><span class="s0">this</span><span class="s1">.runGame = </span><span class="s0">true;</span><span class="s1"> 
+        </span><span class="s0">while </span><span class="s1">(runGame) { 
+            </span><span class="s0">this</span><span class="s1">.showMenu()</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s0">this</span><span class="s1">.handleUserInput()</span><span class="s0">;</span><span class="s1"> 
+        } 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Print the menu options 
+     */</span><span class="s1"> 
+    </span><span class="s0">void </span><span class="s1">showMenu() { 
+        System.out.println(</span><span class="s3">&quot;Log I)n N)ew Duel C)ontinue Duel D)isplay Duels Log O)ut Q)uit&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        System.out.print(</span><span class="s3">&quot;Choose an option: &quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Perform further action according to the users input 
+     */</span><span class="s1"> 
+    </span><span class="s0">void </span><span class="s1">handleUserInput() { 
+ 
+        String input = inputScanner.nextLine()</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s0">if </span><span class="s1">(input != </span><span class="s0">null </span><span class="s1">&amp;&amp; !input.isEmpty()) { 
+ 
+            </span><span class="s0">char </span><span class="s1">command = input.toUpperCase().charAt(</span><span class="s4">0</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+            </span><span class="s0">switch </span><span class="s1">(command) { 
+ 
+                </span><span class="s5">// Log in</span><span class="s1"> 
+                </span><span class="s0">case </span><span class="s3">'I'</span><span class="s1">: 
+                    System.out.print(</span><span class="s3">&quot;Player name: &quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    String playerName = inputScanner.nextLine()</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s0">if </span><span class="s1">(game.login(playerName)) { 
+                        System.out.println(</span><span class="s3">&quot;Login successful&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    } </span><span class="s0">else </span><span class="s1">{ 
+                        System.out.println(</span><span class="s3">&quot;Invalid player&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    } 
+                    </span><span class="s0">break;</span><span class="s1"> 
+ 
+                </span><span class="s5">// Create new duell</span><span class="s1"> 
+                </span><span class="s0">case </span><span class="s3">'N'</span><span class="s1">: 
+                    </span><span class="s0">if </span><span class="s1">(game.getLoginStatus()) { 
+                        System.out.println(</span><span class="s3">&quot;Available opponents: &quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        System.out.println(game.getPossibleOpponents())</span><span class="s0">;</span><span class="s1"> 
+                        System.out.print(</span><span class="s3">&quot;Opponent's name: &quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        String opponentName = inputScanner.nextLine()</span><span class="s0">;</span><span class="s1"> 
+                        </span><span class="s0">if </span><span class="s1">(game.validateOpponent(opponentName)) { 
+                            game.newDuell(opponentName</span><span class="s0">, </span><span class="s1">inputScanner)</span><span class="s0">;</span><span class="s1"> 
+                        } </span><span class="s0">else </span><span class="s1">{ 
+                            System.out.println(</span><span class="s3">&quot;Please choose a valid opponent&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                            </span><span class="s0">break;</span><span class="s1"> 
+                        } 
+                    } </span><span class="s0">else </span><span class="s1">{ 
+                        System.out.println(</span><span class="s3">&quot;Please login first&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    } 
+                    </span><span class="s0">break;</span><span class="s1"> 
+ 
+                </span><span class="s5">// Continue existing duell</span><span class="s1"> 
+                </span><span class="s0">case </span><span class="s3">'C'</span><span class="s1">: 
+ 
+                    </span><span class="s0">if </span><span class="s1">(game.getLoginStatus()) { 
+                        System.out.print(</span><span class="s3">&quot;Enter duell number: &quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        </span><span class="s0">int </span><span class="s1">duellID = inputScanner.nextInt()</span><span class="s0">;</span><span class="s1"> 
+                        inputScanner.nextLine()</span><span class="s0">; </span><span class="s5">//Clear rest of Line from Scanner</span><span class="s1"> 
+                        </span><span class="s0">if </span><span class="s1">(game.validateDuell(duellID)) { 
+                            game.continueDuell(duellID</span><span class="s0">, </span><span class="s1">inputScanner)</span><span class="s0">;</span><span class="s1"> 
+                        } </span><span class="s0">else </span><span class="s1">{ 
+                            System.out.println(</span><span class="s3">&quot;Please choose a valid duell. It should be your turn and it should not be finished.&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                        } 
+                    } </span><span class="s0">else </span><span class="s1">{ 
+                        System.out.println(</span><span class="s3">&quot;Please login first&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    } 
+                    </span><span class="s0">break;</span><span class="s1"> 
+ 
+                </span><span class="s5">// Display existing duells</span><span class="s1"> 
+                </span><span class="s0">case </span><span class="s3">'D'</span><span class="s1">: 
+                    </span><span class="s0">if </span><span class="s1">(game.getLoginStatus()) { 
+                        System.out.println(game.displayDuells())</span><span class="s0">;</span><span class="s1"> 
+                    } </span><span class="s0">else </span><span class="s1">{ 
+                        System.out.println(</span><span class="s3">&quot;Please login first&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    } 
+                    </span><span class="s0">break;</span><span class="s1"> 
+ 
+                </span><span class="s5">// Log out</span><span class="s1"> 
+                </span><span class="s0">case </span><span class="s3">'O'</span><span class="s1">: 
+                    </span><span class="s0">if </span><span class="s1">(game.getLoginStatus()) { 
+                        game.logout()</span><span class="s0">;</span><span class="s1"> 
+                        System.out.println(</span><span class="s3">&quot;Logged out&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    } </span><span class="s0">else </span><span class="s1">{ 
+                        System.out.println(</span><span class="s3">&quot;No action performed because you were not logged in&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    } 
+                    </span><span class="s0">break;</span><span class="s1"> 
+ 
+                </span><span class="s5">// Quit game</span><span class="s1"> 
+                </span><span class="s0">case </span><span class="s3">'Q'</span><span class="s1">: 
+                    </span><span class="s0">this</span><span class="s1">.runGame = </span><span class="s0">false;</span><span class="s1"> 
+                    </span><span class="s0">break;</span><span class="s1"> 
+ 
+                </span><span class="s0">default</span><span class="s1">: 
+                    System.out.println(</span><span class="s3">&quot;Please choose a valid option&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                    </span><span class="s0">break;</span><span class="s1"> 
+            } 
+        } 
+    } 
+}</span></pre>
+</body>
+</html>

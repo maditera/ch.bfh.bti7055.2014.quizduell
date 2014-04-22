@@ -1,0 +1,247 @@
+<html>
+<head>
+<title>QuizduellGame.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(98,151,85); }
+.s3 { color: rgb(104,151,187); }
+.s4 { color: rgb(106,135,89); }
+.s5 { color: rgb(128,128,128); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+QuizduellGame.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">quizduell</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.Scanner</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s2">/** 
+ * The game provides methods to manage multiple players and duels 
+ */</span><span class="s1"> 
+</span><span class="s0">class </span><span class="s1">QuizduellGame { 
+ 
+    </span><span class="s0">private final </span><span class="s1">ArrayList&lt;Duell&gt; allDuells</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private final </span><span class="s1">ArrayList&lt;Player&gt; allPlayers</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private final </span><span class="s1">ArrayList&lt;Player&gt; possibleOpponents</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s0">private </span><span class="s1">Player currentPlayer</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">Duell currentDuell</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private boolean </span><span class="s1">loggedIn</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s2">/** 
+     * Constructor for a new game that initializes the instance variables 
+     */</span><span class="s1"> 
+    </span><span class="s0">public </span><span class="s1">QuizduellGame() { 
+ 
+        </span><span class="s0">this</span><span class="s1">.allDuells = </span><span class="s0">new </span><span class="s1">ArrayList&lt;Duell&gt;()</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.allPlayers = </span><span class="s0">new </span><span class="s1">ArrayList&lt;Player&gt;()</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.possibleOpponents = </span><span class="s0">new </span><span class="s1">ArrayList&lt;Player&gt;()</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s0">this</span><span class="s1">.currentPlayer = </span><span class="s0">null;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.currentDuell = </span><span class="s0">null;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.loggedIn = </span><span class="s0">false;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Login an existing player 
+     * 
+     * @param playerName Name of the player that should be logged in 
+     * @return login status 
+     */</span><span class="s1"> 
+    </span><span class="s0">public boolean </span><span class="s1">login(String playerName) { 
+        </span><span class="s0">for </span><span class="s1">(Player player : </span><span class="s0">this</span><span class="s1">.allPlayers) { 
+            </span><span class="s0">if </span><span class="s1">(player.getPlayerName().equals(playerName)) { 
+                </span><span class="s0">this</span><span class="s1">.currentPlayer = player</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">this</span><span class="s1">.loggedIn = </span><span class="s0">true;</span><span class="s1"> 
+                </span><span class="s0">this</span><span class="s1">.setPossibleOpponents()</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">return true;</span><span class="s1"> 
+            } 
+        } 
+        </span><span class="s0">return false;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Logout a logged in player 
+     */</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">logout() { 
+        </span><span class="s0">this</span><span class="s1">.currentPlayer = </span><span class="s0">null;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.loggedIn = </span><span class="s0">false;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Check the current login status 
+     * 
+     * @return the current login status 
+     */</span><span class="s1"> 
+    </span><span class="s0">public boolean </span><span class="s1">getLoginStatus() { 
+        </span><span class="s0">return this</span><span class="s1">.loggedIn</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Create a new duel for the logged in player against a specific opponent 
+     * and ad it to the duel list 
+     * 
+     * @param opponentName Name of the wished opponent 
+     */</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">newDuell(String opponentName</span><span class="s0">, </span><span class="s1">Scanner inputScanner) { 
+        Player opponentPlayer = </span><span class="s0">null;</span><span class="s1"> 
+        </span><span class="s0">for </span><span class="s1">(Player player : </span><span class="s0">this</span><span class="s1">.allPlayers) { 
+            </span><span class="s0">if </span><span class="s1">(player.getPlayerName().equals(opponentName)) { 
+                opponentPlayer = player</span><span class="s0">;</span><span class="s1"> 
+            } 
+ 
+        } 
+        Duell newDuell = </span><span class="s0">new </span><span class="s1">Duell(</span><span class="s0">this</span><span class="s1">.allDuells.size() + </span><span class="s3">1</span><span class="s0">, this</span><span class="s1">.currentPlayer</span><span class="s0">, </span><span class="s1">opponentPlayer)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.allDuells.add(newDuell)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.currentDuell = newDuell</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.currentDuell.playRound(inputScanner)</span><span class="s0">;</span><span class="s1"> 
+ 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Create a new player and add it to the player list 
+     * 
+     * @param playerName Name of the new player 
+     */</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">newPlayer(String playerName) { 
+        Player newPlayer = </span><span class="s0">new </span><span class="s1">Player(playerName)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">this</span><span class="s1">.allPlayers.add(newPlayer)</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Set a list of all possible opponents for the current player 
+     */</span><span class="s1"> 
+    </span><span class="s0">void </span><span class="s1">setPossibleOpponents() { 
+        </span><span class="s0">this</span><span class="s1">.possibleOpponents.clear()</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">for </span><span class="s1">(Player player : </span><span class="s0">this</span><span class="s1">.allPlayers) { 
+            </span><span class="s0">if </span><span class="s1">(!</span><span class="s0">this</span><span class="s1">.currentPlayer.equals(player)) { 
+                </span><span class="s0">this</span><span class="s1">.possibleOpponents.add(player)</span><span class="s0">;</span><span class="s1"> 
+            } 
+        } 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Gather information about all possible opponents 
+     * 
+     * @return Formatted list of all possible opponents 
+     */</span><span class="s1"> 
+    </span><span class="s0">public </span><span class="s1">String getPossibleOpponents() { 
+        String opponentsList = </span><span class="s4">&quot;&quot;</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">for </span><span class="s1">(Player player : </span><span class="s0">this</span><span class="s1">.possibleOpponents) { 
+            opponentsList = opponentsList + player.getPlayerName() + </span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">&quot;</span><span class="s0">;</span><span class="s1"> 
+        } 
+        </span><span class="s0">return </span><span class="s1">opponentsList</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Check if i chosen opponent name is valid 
+     * 
+     * @param playerName Name of desired opponent 
+     * @return True if valid opponent, false if invalid opponent 
+     */</span><span class="s1"> 
+    </span><span class="s0">public boolean </span><span class="s1">validateOpponent(String playerName) { 
+        </span><span class="s0">for </span><span class="s1">(Player player : </span><span class="s0">this</span><span class="s1">.possibleOpponents) { 
+            </span><span class="s0">if </span><span class="s1">(player.getPlayerName().equals(playerName)) { 
+                </span><span class="s0">return true;</span><span class="s1"> 
+            } 
+        } 
+        </span><span class="s0">return false;</span><span class="s1"> 
+    } 
+ 
+</span><span class="s5">// --Commented out by Inspection START (22.04.14 17:42):</span><span class="s1"> 
+</span><span class="s5">//    /**</span><span class="s1"> 
+</span><span class="s5">//     * Gather information about all players of a game</span><span class="s1"> 
+</span><span class="s5">//     *</span><span class="s1"> 
+</span><span class="s5">//     * @return Formatted list containing all players in a game</span><span class="s1"> 
+</span><span class="s5">//     */</span><span class="s1"> 
+</span><span class="s5">//    public String getAllPlayers() {</span><span class="s1"> 
+</span><span class="s5">//        String playerList = &quot;&quot;;</span><span class="s1"> 
+</span><span class="s5">//        for (Player player : this.allPlayers) {</span><span class="s1"> 
+</span><span class="s5">//            playerList = playerList + player.getPlayerName() + &quot;\n&quot;;</span><span class="s1"> 
+</span><span class="s5">//        }</span><span class="s1"> 
+</span><span class="s5">//        return playerList;</span><span class="s1"> 
+</span><span class="s5">//</span><span class="s1"> 
+</span><span class="s5">//    }</span><span class="s1"> 
+</span><span class="s5">// --Commented out by Inspection STOP (22.04.14 17:42)</span><span class="s1"> 
+ 
+    </span><span class="s2">/** 
+     * Search for all duels in which a specific player is involved 
+     * 
+     * @param player Specific player object 
+     * @return List of duel objects assigned to specific user 
+     */</span><span class="s1"> 
+    ArrayList&lt;Duell&gt; getAPlayerDuells(Player player) { 
+        ArrayList&lt;Duell&gt; APlayersDuells = </span><span class="s0">new </span><span class="s1">ArrayList&lt;Duell&gt;()</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">for </span><span class="s1">(Duell duell : </span><span class="s0">this</span><span class="s1">.allDuells) { 
+            </span><span class="s0">if </span><span class="s1">(duell.getPlayer1().equals(player) || duell.getPlayer2().equals(player)) { 
+                APlayersDuells.add(duell)</span><span class="s0">;</span><span class="s1"> 
+            } 
+        } 
+        </span><span class="s0">return </span><span class="s1">APlayersDuells</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Check if a certain duel can be played by the current player 
+     * 
+     * @param duellID Unique duel identifier shown to the player 
+     * @return True if certain duel can be played, false if not 
+     */</span><span class="s1"> 
+    </span><span class="s0">public boolean </span><span class="s1">validateDuell(</span><span class="s0">int </span><span class="s1">duellID) { 
+        Duell duellToValidate</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s0">for </span><span class="s1">(Duell duell : </span><span class="s0">this</span><span class="s1">.allDuells) { 
+            </span><span class="s0">if </span><span class="s1">(duell.getDuellID() == duellID) { 
+                duellToValidate = duell</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">if </span><span class="s1">(duellToValidate.notFinished()) { 
+ 
+                    </span><span class="s0">if </span><span class="s1">((duellToValidate.getCurrentStatus() == DuellStatus.PLAYER1) &amp;&amp; (duellToValidate.getPlayer1().equals(</span><span class="s0">this</span><span class="s1">.currentPlayer))) { 
+                        </span><span class="s0">return true;</span><span class="s1"> 
+                    } </span><span class="s0">else if </span><span class="s1">((duellToValidate.getCurrentStatus() == DuellStatus.PLAYER2) &amp;&amp; (duellToValidate.getPlayer2().equals(</span><span class="s0">this</span><span class="s1">.currentPlayer))) { 
+                        </span><span class="s0">return true;</span><span class="s1"> 
+                    } 
+                } 
+            } 
+        } 
+        </span><span class="s0">return false;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Load a specific duel and play a round 
+     * 
+     * @param duellID Unique duel identifier shown to the player 
+     */</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">continueDuell(</span><span class="s0">int </span><span class="s1">duellID</span><span class="s0">, </span><span class="s1">Scanner inputScanner) { 
+        </span><span class="s0">for </span><span class="s1">(Duell duell : </span><span class="s0">this</span><span class="s1">.allDuells) { 
+            </span><span class="s0">if </span><span class="s1">(duell.getDuellID() == duellID) { 
+                </span><span class="s0">this</span><span class="s1">.currentDuell = duell</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">this</span><span class="s1">.currentDuell.playRound(inputScanner)</span><span class="s0">;</span><span class="s1"> 
+            } 
+        } 
+    } 
+ 
+    </span><span class="s2">/** 
+     * Gather information about all duels involving the current player 
+     * 
+     * @return Formatted list of all duels involving the current player 
+     */</span><span class="s1"> 
+    </span><span class="s0">public </span><span class="s1">String displayDuells() { 
+        String duellList = </span><span class="s4">&quot;&quot;</span><span class="s0">;</span><span class="s1"> 
+        ArrayList&lt;Duell&gt; duellsToDisplay = </span><span class="s0">this</span><span class="s1">.getAPlayerDuells(currentPlayer)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">for </span><span class="s1">(Duell duell : duellsToDisplay) { 
+            duellList = duellList + duell.toString() + </span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">&quot;</span><span class="s0">;</span><span class="s1"> 
+        } 
+        </span><span class="s0">return </span><span class="s1">duellList</span><span class="s0">;</span><span class="s1"> 
+    } 
+}</span></pre>
+</body>
+</html>
